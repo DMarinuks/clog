@@ -40,18 +40,27 @@ func makeFormat(color string, argsCount int) string {
 
 func Error(args ...interface{}) {
 	if l.level >= 0 {
+		if l.showTime {
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+		}
 		l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	}
 }
 
 func Info(args ...interface{}) {
 	if l.level >= 1 {
+		if l.showTime {
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+		}
 		l.logger.Printf(makeFormat(greenColor, len(args)), args...)
 	}
 }
 
 func Warn(args ...interface{}) {
 	if l.level >= 2 {
+		if l.showTime {
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+		}
 		l.logger.Printf(makeFormat(lightBlueColor, len(args)), args...)
 	}
 }
@@ -66,6 +75,9 @@ func Debug(args ...interface{}) {
 }
 
 func Fatal(args ...interface{}) {
+	if l.showTime {
+		args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+	}
 	l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	os.Exit(1)
 }

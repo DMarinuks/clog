@@ -11,6 +11,7 @@ var got bytes.Buffer
 
 func TestMain(m *testing.M) {
 	InitLogger(&got, "", 0, DebugLevel)
+	ShowTime(false)
 	os.Exit(m.Run())
 }
 
