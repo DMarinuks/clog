@@ -3,6 +3,7 @@ package clog
 import (
 	"bytes"
 	"os"
+	"regexp"
 	"testing"
 )
 
@@ -45,5 +46,26 @@ func TestDebug(t *testing.T) {
 	Debug("test")
 	if got.String() != want {
 		t.Errorf("Debug() = %v, want %v", got, want)
+	}
+}
+
+func TestShowTime(t *testing.T) {
+	timeRE := regexp.MustCompile(`(\d{1,2}:\d{1,2}:\d{1,2}\s\d{1,2}-\d{1,2}-\d{4})`)
+	ShowTime(true)
+	Debug("test")
+	regResults := timeRE.FindStringSubmatch(got.String())
+	if len(regResults) != 2 {
+		t.Errorf("ShowTime() = %v, want time in output", got.String())
+	}
+}
+
+func TestSetTimeFormat(t *testing.T) {
+	timeRE := regexp.MustCompile(`(\d{1,2}:\d{1,2}:\d{1,2})`)
+	ShowTime(true)
+	SetTimeFormat("15:04:05")
+	Debug("test")
+	regResults := timeRE.FindStringSubmatch(got.String())
+	if len(regResults) != 2 {
+		t.Errorf("ShowTime() = %v, want time in output", got.String())
 	}
 }

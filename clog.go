@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 )
 
 const (
@@ -23,8 +24,10 @@ const (
 )
 
 type myLogger struct {
-	logger *log.Logger
-	level  LogLevel
+	logger 		*log.Logger
+	level  		LogLevel
+	showTime 	bool
+	timePattern string
 }
 
 func makeFormat(color string, argsCount int) string {
@@ -55,6 +58,9 @@ func Warn(args ...interface{}) {
 
 func Debug(args ...interface{}) {
 	if l.level == 3 {
+		if l.showTime {
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+		}
 		l.logger.Printf(makeFormat(yellowColor, len(args)), args...)
 	}
 }
@@ -66,9 +72,19 @@ func Fatal(args ...interface{}) {
 
 var l myLogger
 
+func ShowTime(showTime bool) {
+	l.showTime = showTime
+}
+
+func SetTimeFormat(format string) {
+	l.timePattern = format
+}
+
 func InitLogger(writer io.Writer, prefix string, flag int, level LogLevel) {
 	l = myLogger{
 		logger: log.New(writer, prefix, flag),
 		level:  level,
+		showTime: true,
+		timePattern: "15:04:05 02-01-2006",
 	}
 }
