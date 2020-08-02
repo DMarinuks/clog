@@ -15,6 +15,8 @@ Available methods:
 4. Warn( args ...interface{} )
 5. Debug( args ...interface{} )
 6. Fatal( args ...interface{} )
+7. ShowTime( bool ) // default true
+8. SetTimeFormat( format string )
 
 
 ## Example
