@@ -40,8 +40,9 @@ func makeFormat(color string, argsCount int) string {
 
 func Error(args ...interface{}) {
 	if l.level >= 0 {
+		args = append([]interface{}{"ERROR:"}, args...)
 		if l.showTime {
-			args = append([]interface{}{"ERROR:",time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	}
@@ -49,8 +50,9 @@ func Error(args ...interface{}) {
 
 func Info(args ...interface{}) {
 	if l.level >= 1 {
+		args = append([]interface{}{"INFO:"}, args...)
 		if l.showTime {
-			args = append([]interface{}{"INFO:",time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(greenColor, len(args)), args...)
 	}
@@ -58,8 +60,9 @@ func Info(args ...interface{}) {
 
 func Warn(args ...interface{}) {
 	if l.level >= 2 {
+		args = append([]interface{}{"WARNING:"}, args...)
 		if l.showTime {
-			args = append([]interface{}{"WARNING:",time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(lightBlueColor, len(args)), args...)
 	}
@@ -67,16 +70,18 @@ func Warn(args ...interface{}) {
 
 func Debug(args ...interface{}) {
 	if l.level == 3 {
+		args = append([]interface{}{"DEBUG:"}, args...)
 		if l.showTime {
-			args = append([]interface{}{"DEBUG:",time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(yellowColor, len(args)), args...)
 	}
 }
 
 func Fatal(args ...interface{}) {
+	args = append([]interface{}{"FATAL:"}, args...)
 	if l.showTime {
-		args = append([]interface{}{"FATAL:",time.Now().Format(l.timePattern)}, args...)
+		args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 	}
 	l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	os.Exit(1)
