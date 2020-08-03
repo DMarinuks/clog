@@ -51,7 +51,7 @@ func TestDebug(t *testing.T) {
 }
 
 func TestShowTime(t *testing.T) {
-	timeRE := regexp.MustCompile(`(\d{1,2}:\d{1,2}:\d{1,2}\s\d{1,2}-\d{1,2}-\d{4})`)
+	timeRE := regexp.MustCompile(`(\d{4}-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2})`)
 	ShowTime(true)
 	Debug("test")
 	regResults := timeRE.FindStringSubmatch(got.String())

@@ -41,7 +41,7 @@ func makeFormat(color string, argsCount int) string {
 func Error(args ...interface{}) {
 	if l.level >= 0 {
 		if l.showTime {
-			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{"ERROR:",time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	}
@@ -50,7 +50,7 @@ func Error(args ...interface{}) {
 func Info(args ...interface{}) {
 	if l.level >= 1 {
 		if l.showTime {
-			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{"INFO:",time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(greenColor, len(args)), args...)
 	}
@@ -59,7 +59,7 @@ func Info(args ...interface{}) {
 func Warn(args ...interface{}) {
 	if l.level >= 2 {
 		if l.showTime {
-			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{"WARNING:",time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(lightBlueColor, len(args)), args...)
 	}
@@ -68,7 +68,7 @@ func Warn(args ...interface{}) {
 func Debug(args ...interface{}) {
 	if l.level == 3 {
 		if l.showTime {
-			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+			args = append([]interface{}{"DEBUG:",time.Now().Format(l.timePattern)}, args...)
 		}
 		l.logger.Printf(makeFormat(yellowColor, len(args)), args...)
 	}
@@ -76,7 +76,7 @@ func Debug(args ...interface{}) {
 
 func Fatal(args ...interface{}) {
 	if l.showTime {
-		args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
+		args = append([]interface{}{"FATAL:",time.Now().Format(l.timePattern)}, args...)
 	}
 	l.logger.Printf(makeFormat(redColor, len(args)), args...)
 	os.Exit(1)
@@ -97,6 +97,6 @@ func InitLogger(writer io.Writer, prefix string, flag int, level LogLevel) {
 		logger: log.New(writer, prefix, flag),
 		level:  level,
 		showTime: true,
-		timePattern: "15:04:05 02-01-2006",
+		timePattern: "2006-02-01 15:04:05",
 	}
 }
