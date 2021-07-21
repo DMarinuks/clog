@@ -44,7 +44,11 @@ func Error(args ...interface{}) {
 		if l.showTime {
 			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
-		l.logger.Printf(makeFormat(redColor, len(args)), args...)
+		if l.level != DebugLevel {
+			l.logger.Println(args...)
+		} else {
+			l.logger.Printf(makeFormat(redColor, len(args)), args...)
+		}
 	}
 }
 
@@ -54,7 +58,11 @@ func Info(args ...interface{}) {
 		if l.showTime {
 			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
-		l.logger.Printf(makeFormat(greenColor, len(args)), args...)
+		if l.level != DebugLevel {
+			l.logger.Println(args...)
+		} else {
+			l.logger.Printf(makeFormat(greenColor, len(args)), args...)
+		}
 	}
 }
 
@@ -64,7 +72,11 @@ func Warn(args ...interface{}) {
 		if l.showTime {
 			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
-		l.logger.Printf(makeFormat(lightBlueColor, len(args)), args...)
+		if l.level != DebugLevel {
+			l.logger.Println(args...)
+		} else {
+			l.logger.Printf(makeFormat(lightBlueColor, len(args)), args...)
+		}
 	}
 }
 
@@ -74,7 +86,11 @@ func Debug(args ...interface{}) {
 		if l.showTime {
 			args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 		}
-		l.logger.Printf(makeFormat(yellowColor, len(args)), args...)
+		if l.level != DebugLevel {
+			l.logger.Println(args...)
+		} else {
+			l.logger.Printf(makeFormat(yellowColor, len(args)), args...)
+		}
 	}
 }
 
@@ -83,7 +99,11 @@ func Fatal(args ...interface{}) {
 	if l.showTime {
 		args = append([]interface{}{time.Now().Format(l.timePattern)}, args...)
 	}
-	l.logger.Printf(makeFormat(redColor, len(args)), args...)
+	if l.level != DebugLevel {
+		l.logger.Println(args...)
+	} else {
+		l.logger.Printf(makeFormat(redColor, len(args)), args...)
+	}
 	os.Exit(1)
 }
 
